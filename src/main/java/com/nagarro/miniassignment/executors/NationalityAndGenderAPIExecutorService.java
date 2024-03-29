@@ -41,17 +41,18 @@ public class NationalityAndGenderAPIExecutorService {
 		try {
 			nationalityResponse= result1.get();
 			genderApiResponse= result2.get();
-		} catch (InterruptedException | ExecutionException e) {
+		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
-		
-		boolean isNationalityMatch = nationalityResponse.getCountry()
+
+		boolean isNationalityMatch = (nationalityResponse != null) && nationalityResponse.getCountry()
 					.stream().anyMatch(country -> country.getCountry_id().equals(user.getNationality()));
-			
+
 		boolean isGenderMatch= false;
-		if(genderApiResponse.getGender()!=null && genderApiResponse.getGender().equalsIgnoreCase(user.getGender())) {
+		if((genderApiResponse!= null ) && genderApiResponse.getGender()!=null && genderApiResponse.getGender().equalsIgnoreCase(user.getGender())) {
 			isGenderMatch= true;
 		}
+
 
 		service.shutdown();
 		
